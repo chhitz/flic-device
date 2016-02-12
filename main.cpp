@@ -100,7 +100,6 @@ private:
 				{
 					if (!ec)
 					{
-						std::cout << "write successful" << std::endl;
 						write_msgs_.pop_front();
 						if (!write_msgs_.empty())
 						{
@@ -168,7 +167,7 @@ private:
 				{
 					if (!ec)
 					{
-						std::cout << read_msg_ << std::endl;
+						std::cout << "read: " << read_msg_ << std::endl;
 						do_read();
 					}
 					else
