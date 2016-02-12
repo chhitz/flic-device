@@ -186,7 +186,7 @@ int main() {
 		std::thread t([&io_service]() {io_service.run();});
 
 		client.start(
-				[&client, &io_service] () {
+				[&client, &io_service, &endpoint_iterator] () {
 					std::cout << "Initialized" << std::endl;
 					auto manager = client.getManager();
 
