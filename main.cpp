@@ -32,7 +32,7 @@ public:
 				" 'name':'Flic',"
 				" 'buttons':[{{'id':0}}],"
 				" 'inputs': [{{'inputtype':12}},{{'inputtype':1}}]"
-				"}}", id_, strdsuid(&dsuid_)));
+				"}}\n", id_, strdsuid(&dsuid_)));
 	}
 
 	virtual std::string getHash() override {
@@ -47,7 +47,7 @@ public:
 				" 'index':0,"
 				" 'value':{},"
 				" 'tag':'{}'"
-				"}}", (isUp ? 1 : 0), id_));
+				"}}\n", (isUp ? 1 : 0), id_));
 	}
 
 	virtual void onReady(const std::string& deviceId) override {
@@ -56,7 +56,7 @@ public:
 				" 'index':1,"
 				" 'value':1,"
 				" 'tag':'{}'"
-				"}}", id_));
+				"}}\n", id_));
 	}
 
 	virtual void onDisconnect(const std::string& deviceId) override {
@@ -65,7 +65,7 @@ public:
 				" 'index':1,"
 				" 'value':0,"
 				" 'tag':'{}'"
-				"}}", id_));
+				"}}\n", id_));
 	}
 
 	virtual void onBatteryStatus(const std::string& deviceId,
@@ -75,7 +75,7 @@ public:
 				" 'index':0,"
 				" 'value':{},"
 				" 'tag':'{}'"
-				"}}", (battery < 10 ? 1 : 0), id_));
+				"}}\n", (battery < 10 ? 1 : 0), id_));
 	}
 
 private:
