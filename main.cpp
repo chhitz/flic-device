@@ -131,7 +131,7 @@ public:
 			asio::io_service& io_service,
 			tcp::resolver::iterator endpoint_iterator) :
 			manager(manager), io_service_(io_service), socket_(io_service) {
-
+		do_connect(endpoint_iterator);
 	}
 
 	virtual std::string getHash() override {
