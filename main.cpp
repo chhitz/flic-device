@@ -18,6 +18,8 @@ public:
 	ButtonEventListener(asio::io_service& io_service,
 			const std::string& deviceId) :
 			io_service_(io_service), socket_(io_service), id_(deviceId) {
+		std::cout << deviceId << " collected" << std::endl;
+
 		dsuid_generate_v3_from_namespace(DSUID_NS_IEEE_MAC, id_.c_str(),
 				&dsuid_);
 
@@ -78,6 +80,7 @@ public:
 
 private:
 	void write(const std::string& msg) {
+		std::cout << "write: " << msg << std::endl;
 		io_service_.post([this, msg]()
 		{
 			bool write_in_progress = !write_msgs_.empty();
