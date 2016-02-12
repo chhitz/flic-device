@@ -30,8 +30,8 @@ public:
 				" 'group': 8,"
 				" 'hardwarename':'Flic button',"
 				" 'name':'Flic',"
-				" 'buttons':[{{'id':0,'buttontype':1,'group':8}}],"
-				" 'inputs': [{{'inputtype':12}},{{'inputtype':1}}]"
+				" 'buttons':[{{'id':0,'buttontype':1,'group':1}}],"
+				" 'inputs': [{{'inputtype':12,'usage':1}},{{'inputtype':1,'usage':1}}]"
 				"}}\n", id_, strdsuid(&dsuid_)));
 	}
 
