@@ -208,7 +208,7 @@ int main() {
 									new ButtonListener(manager, io_service,
 											endpoint_iterator)));
 
-					t = std::thread([&io_service]() {io_service.run();});
+					t = std::thread([&io_service]() {std::cout << "ASIO thread started" << std::endl; io_service.run(); std::cout << "ASIO thread exited" << std::endl;});
 
 					for (auto& button : manager->getButtons()) {
 						button->addButtonEventListener(std::shared_ptr<flic::client::button::ButtonEventListener>(
