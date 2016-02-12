@@ -6,7 +6,7 @@
 #include "flic.hpp"
 #include "format.h"
 
-#include <dsuid.h>
+#include <digitalSTROM/dsuid.h>
 
 using asio::ip::tcp;
 
