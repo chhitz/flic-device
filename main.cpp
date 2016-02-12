@@ -21,16 +21,16 @@ public:
 		dsuid_generate_v3_from_namespace(DSUID_NS_IEEE_MAC, id_.c_str(),
 				&dsuid_);
 
-		write(fmt::format("{'message':'init',"
+		write(fmt::format("{{'message':'init',"
 				" 'protocol':'json',"
 				" 'tag':'{}',"
 				" 'uniqueid':'{}',"
 				" 'group': 8,"
 				" 'hardwarename':'Flic button',"
 				" 'name':'Flic',"
-				" 'buttons':[{'id':0}],"
-				" 'inputs': [{'inputtype':12},{'inputtype':1}]"
-				"}", id_, strdsuid(&dsuid_)));
+				" 'buttons':[{{'id':0}}],"
+				" 'inputs': [{{'inputtype':12}},{{'inputtype':1}}]"
+				"}}", id_, strdsuid(&dsuid_)));
 	}
 
 	virtual std::string getHash() override {
@@ -41,39 +41,39 @@ public:
 			const bool& queued, const int& timeDiff, const bool& isUp,
 			const bool& isDown) override {
 		std::cout << deviceId << (isUp ? " up" : " down") << std::endl;
-		write(fmt::format("{'message':'button',"
+		write(fmt::format("{{'message':'button',"
 				" 'index':0,"
 				" 'value':{},"
 				" 'tag':'{}'"
-				"}", (isUp ? 1 : 0), id_));
+				"}}", (isUp ? 1 : 0), id_));
 	}
 
 	virtual void onReady(const std::string& deviceId) override {
 		std::cout << deviceId << " ready" << std::endl;
-		write(fmt::format("{'message':'input',"
+		write(fmt::format("{{'message':'input',"
 				" 'index':1,"
 				" 'value':1,"
 				" 'tag':'{}'"
-				"}", id_));
+				"}}", id_));
 	}
 
 	virtual void onDisconnect(const std::string& deviceId) override {
 		std::cout << deviceId << " disconnected" << std::endl;
-		write(fmt::format("{'message':'input',"
+		write(fmt::format("{{'message':'input',"
 				" 'index':1,"
 				" 'value':0,"
 				" 'tag':'{}'"
-				"}", id_));
+				"}}", id_));
 	}
 
 	virtual void onBatteryStatus(const std::string& deviceId,
 			const int& battery) override {
 		std::cout << deviceId << " battery is: " << battery << std::endl;
-		write(fmt::format("{'message':'input',"
+		write(fmt::format("{{'message':'input',"
 				" 'index':0,"
 				" 'value':{},"
 				" 'tag':'{}'"
-				"}", (battery < 10 ? 1 : 0), id_));
+				"}}", (battery < 10 ? 1 : 0), id_));
 	}
 
 private:
