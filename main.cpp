@@ -194,8 +194,6 @@ int main() {
 		while (endpt_iter != asio::ip::tcp::resolver::iterator()) {
 			auto endpoint = *endpt_iter++;
 			std::cout << endpoint.endpoint() << std::endl;
-			std::cout << endpoint.host_name() << std::endl;
-			std::cout << endpoint.service_name() << std::endl;
 		}
 
 		std::thread t([&io_service]() {io_service.run();});
