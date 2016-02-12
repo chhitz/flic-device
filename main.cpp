@@ -45,6 +45,10 @@ public:
 	virtual void onButtonUpOrDown(const std::string& deviceId,
 			const bool& queued, const int& timeDiff, const bool& isUp,
 			const bool& isDown) override {
+		//ignore any clicks that are older than 15 seconds
+		if (queued && (timeDiff > 15)) {
+			return;
+		}
 		std::cout << deviceId << (isUp ? " up" : " down") << std::endl;
 		write(fmt::format("{{'message':'button',"
 				" 'index':0,"
