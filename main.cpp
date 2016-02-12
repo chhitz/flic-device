@@ -15,9 +15,9 @@ typedef std::deque<std::string> message_queue;
 
 class ButtonEventListener: public flic::client::button::ButtonEventListener {
 public:
-	ButtonEventListener(asio::io_service& io_service,
+	ButtonEventListener(asio::io_service& io_service, tcp::socket& socket,
 			const std::string& deviceId) :
-			io_service_(io_service), socket_(io_service), id_(deviceId) {
+			io_service_(io_service), socket_(socket), id_(deviceId) {
 		std::cout << deviceId << " collected" << std::endl;
 
 		dsuid_generate_v3_from_namespace(DSUID_NS_IEEE_MAC, id_.c_str(),
@@ -117,7 +117,7 @@ private:
 
 private:
 	asio::io_service& io_service_;
-	tcp::socket socket_;
+	tcp::socket& socket_;
 	message_queue write_msgs_;
 	std::string id_;
 	dsuid_t dsuid_;
@@ -128,9 +128,9 @@ private:
 	std::shared_ptr<flic::client::manager::Manager> manager;
 public:
 	ButtonListener(std::shared_ptr<flic::client::manager::Manager> manager,
-			asio::io_service& io_service,
+			asio::io_service& io_service, tcp::socket& socket,
 			tcp::resolver::iterator endpoint_iterator) :
-			manager(manager), io_service_(io_service), socket_(io_service) {
+			manager(manager), io_service_(io_service), socket_(socket) {
 		do_connect(endpoint_iterator);
 	}
 
@@ -142,8 +142,10 @@ public:
 		auto button = manager->getButton(deviceId);
 		button->addButtonEventListener(
 				std::shared_ptr<flic::client::button::ButtonEventListener>(
-						new ButtonEventListener(io_service_, deviceId)));
+						new ButtonEventListener(io_service_, socket_, deviceId)));
 	}
+
+	tcp::socket& getSocket() const { return socket_; }
 
 private:
 	void do_connect(tcp::resolver::iterator endpoint_iterator) {
@@ -178,7 +180,7 @@ private:
 
 private:
 	asio::io_service& io_service_;
-	tcp::socket socket_;
+	tcp::socket& socket_;
 	char read_msg_[128];
 };
 
@@ -197,15 +199,16 @@ int main() {
 		}
 
 		std::thread t;
+		tcp::socket socket(io_service);
 
 		client.start(
-				[&client, &io_service, &endpoint_iterator, &t] () {
+				[&client, &io_service, &endpoint_iterator, &t, &socket] () {
 					std::cout << "Initialized" << std::endl;
 					auto manager = client.getManager();
 
 					manager->addButtonListener(
 							std::shared_ptr<flic::client::manager::ButtonListener>(
-									new ButtonListener(manager, io_service,
+									new ButtonListener(manager, io_service, socket,
 											endpoint_iterator)));
 
 					t = std::thread([&io_service]() {std::cout << "ASIO thread started" << std::endl; io_service.run(); std::cout << "ASIO thread exited" << std::endl;});
