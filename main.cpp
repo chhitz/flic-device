@@ -47,7 +47,7 @@ public:
 				" 'index':0,"
 				" 'value':{},"
 				" 'tag':'{}'"
-				"}}\n", (isUp ? 1 : 0), id_));
+				"}}\n", (isUp ? 0 : 1), id_));
 	}
 
 	virtual void onReady(const std::string& deviceId) override {
