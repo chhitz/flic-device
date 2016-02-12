@@ -34,6 +34,8 @@ public:
 				" 'buttons':[{{'id':0,'buttontype':1,'group':1}}],"
 				" 'inputs': [{{'inputtype':12,'usage':1}},{{'inputtype':1,'usage':1}}]"
 				"}}\n", id_, strdsuid(&dsuid_)));
+		onConnect(deviceId);
+		onBatteryStatus(deviceId, 100);
 	}
 
 	virtual std::string getHash() override {
@@ -51,7 +53,7 @@ public:
 				"}}\n", (isUp ? 0 : 1), id_));
 	}
 
-	virtual void onReady(const std::string& deviceId) override {
+	virtual void onConnect(const std::string& deviceId) override {
 		std::cout << deviceId << " ready" << std::endl;
 		write(fmt::format("{{'message':'input',"
 				" 'index':1,"
