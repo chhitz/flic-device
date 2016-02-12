@@ -215,7 +215,7 @@ int main() {
 
 					for (auto& button : manager->getButtons()) {
 						button->addButtonEventListener(std::shared_ptr<flic::client::button::ButtonEventListener>(
-								new ButtonEventListener(io_service, button->getDeviceId())));
+								new ButtonEventListener(io_service, socket, button->getDeviceId())));
 					}
 				}, [&client] (const bool& resumable) {
 					std::cout << "Uninitialized" << std::endl;
