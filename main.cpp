@@ -100,6 +100,7 @@ private:
 				{
 					if (!ec)
 					{
+						std::cout << "write successful" << std::endl;
 						write_msgs_.pop_front();
 						if (!write_msgs_.empty())
 						{
@@ -108,6 +109,7 @@ private:
 					}
 					else
 					{
+						std::cout << "write failed with: " << ec << std::endl;
 						socket_.close();
 					}
 				});
@@ -150,7 +152,10 @@ private:
 				{
 					if (!ec)
 					{
+						std::cout << "connected to vdcd" << std::endl;
 						do_read();
+					} else {
+						std::cout << "connection to vdcd failed with: " << ec << std::endl;
 					}
 				});
 	}
