@@ -2,7 +2,7 @@
 
 CC= g++
 CXXFLAGS+= -std=c++11 -DASIO_STANDALONE -I.
-LDLIBS= -lflic -ldsuid
+LDLIBS= -lflic -ldsuid -lpthread
 
 all: main
 
