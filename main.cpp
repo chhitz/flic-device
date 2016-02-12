@@ -183,17 +183,17 @@ int main() {
 		tcp::resolver resolver(io_service);
 		auto endpoint_iterator = resolver.resolve( { "localhost", "8999" });
 
-		client.getManager()->addButtonListener(
-				std::shared_ptr<flic::client::manager::ButtonListener>(
-						new ButtonListener(client.getManager(), io_service,
-								endpoint_iterator)));
-
 		std::thread t([&io_service]() {io_service.run();});
 
 		client.start(
 				[&client, &io_service] () {
 					std::cout << "Initialized" << std::endl;
 					auto manager = client.getManager();
+
+					manager->addButtonListener(
+							std::shared_ptr<flic::client::manager::ButtonListener>(
+									new ButtonListener(manager, io_service,
+											endpoint_iterator)));
 
 					for (auto& button : manager->getButtons()) {
 						button->addButtonEventListener(std::shared_ptr<flic::client::button::ButtonEventListener>(
