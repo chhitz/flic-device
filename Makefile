@@ -6,7 +6,7 @@ LDLIBS= -lflic -ldsuid
 
 all: main
 
-main: main.o
+main: main.o format.o
 
 clean:
 	rm -rf main main.o
