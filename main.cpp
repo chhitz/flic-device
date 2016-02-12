@@ -196,10 +196,10 @@ int main() {
 			std::cout << endpoint.endpoint() << std::endl;
 		}
 
-		std::thread t([&io_service]() {io_service.run();});
+		std::thread t;
 
 		client.start(
-				[&client, &io_service, &endpoint_iterator] () {
+				[&client, &io_service, &endpoint_iterator, &t] () {
 					std::cout << "Initialized" << std::endl;
 					auto manager = client.getManager();
 
@@ -207,6 +207,8 @@ int main() {
 							std::shared_ptr<flic::client::manager::ButtonListener>(
 									new ButtonListener(manager, io_service,
 											endpoint_iterator)));
+
+					t = std::thread([&io_service]() {io_service.run();});
 
 					for (auto& button : manager->getButtons()) {
 						button->addButtonEventListener(std::shared_ptr<flic::client::button::ButtonEventListener>(
