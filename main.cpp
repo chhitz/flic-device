@@ -1,6 +1,7 @@
 #include <iostream>
 #include <deque>
 #include <array>
+#include <thread>
 
 #include "asio.hpp"
 #include "flic.hpp"
