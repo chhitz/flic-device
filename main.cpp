@@ -183,12 +183,12 @@ int main() {
 		tcp::resolver resolver(io_service);
 		auto endpoint_iterator = resolver.resolve( { "localhost", "8999" });
 
-		std::thread t([&io_service]() {io_service.run();});
-
 		client.getManager()->addButtonListener(
 				std::shared_ptr<flic::client::manager::ButtonListener>(
 						new ButtonListener(client.getManager(), io_service,
 								endpoint_iterator)));
+
+		std::thread t([&io_service]() {io_service.run();});
 
 		client.start(
 				[&client, &io_service] () {
@@ -203,6 +203,7 @@ int main() {
 					std::cout << "Uninitialized" << std::endl;
 				});
 		client.run();
+		t.join();
 	} catch (flic::client::ClientNetworkException& e) {
 		std::cerr << e.what() << std::endl;
 	} catch (std::exception& e) {
