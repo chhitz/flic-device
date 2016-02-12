@@ -29,6 +29,7 @@ public:
 				" 'uniqueid':'{}',"
 				" 'group': 8,"
 				" 'hardwarename':'Flic button',"
+				" 'modelname':'Flic button',"
 				" 'name':'Flic',"
 				" 'buttons':[{{'id':0,'buttontype':1,'group':1}}],"
 				" 'inputs': [{{'inputtype':12,'usage':1}},{{'inputtype':1,'usage':1}}]"
