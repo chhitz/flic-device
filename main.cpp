@@ -190,7 +190,7 @@ int main() {
 								endpoint_iterator)));
 
 		client.start(
-				[&client] () {
+				[&client, &io_service] () {
 					std::cout << "Initialized" << std::endl;
 					auto manager = client.getManager();
 
