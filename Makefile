@@ -1,6 +1,6 @@
 .PHONY: clean
 
-ARCH=arm7l
+ARCH=armv7l
 
 CC= g++
 CXXFLAGS+= -g -std=c++11 -DASIO_STANDALONE -Iexternal/asio/asio/include -Iexternal/fliclib-linux/${ARCH}/fliclib-cpp
