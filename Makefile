@@ -11,4 +11,4 @@ all: main
 main: main.o
 
 clean:
-	rm -rf main main.o format.o
+	rm -rf main main.o
