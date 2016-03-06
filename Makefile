@@ -8,7 +8,7 @@ LDLIBS= -L/usr/local/lib -Lexternal/cppformat/cppformat/ -Lexternal/fliclib-linu
 
 all: main
 
-main: main.o
+main: main.o connection.o
 
 clean:
-	rm -rf main main.o
+	rm -rf main main.o connection.o
