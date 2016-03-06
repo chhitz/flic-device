@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 #include "asio.hpp"
 #include "flic.hpp"
@@ -141,6 +142,23 @@ int main() {
 				}, [&client] (const bool& resumable) {
 					std::cout << "Uninitialized" << std::endl;
 				});
+
+		asio::deadline_timer startScanTimer(io_service,
+				boost::posix_time::seconds(5));
+		startScanTimer.async_wait([&client](const asio::error_code& error) {
+			std::cout << "Start scanning for new buttons" << std::endl;
+			auto manager = client.getManager();
+			manager->startScan();
+		});
+
+		asio::deadline_timer startScanTimer(io_service,
+				boost::posix_time::seconds(5+30));
+		startScanTimer.async_wait([&client](const asio::error_code& error) {
+			std::cout << "Stop scanning for new buttons" << std::endl;
+			auto manager = client.getManager();
+			manager->stopScan();
+		});
+
 		client.run();
 		t.join();
 	} catch (flic::client::ClientNetworkException& e) {
