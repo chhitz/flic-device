@@ -103,6 +103,7 @@ public:
 
 	virtual void onButtonDiscover(const std::string& deviceId) override {
 		auto button = manager->getButton(deviceId);
+		button->connect();
 		button->addButtonEventListener(
 				std::shared_ptr<flic::client::button::ButtonEventListener>(
 						new ButtonEventListener(connection_, deviceId)));
@@ -136,6 +137,7 @@ int main() {
 									new ButtonListener(connection, manager)));
 
 					for (auto& button : manager->getButtons()) {
+						button->connect();
 						button->addButtonEventListener(std::shared_ptr<flic::client::button::ButtonEventListener>(
 										new ButtonEventListener(connection, button->getDeviceId())));
 					}
