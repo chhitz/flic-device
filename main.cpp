@@ -2,7 +2,7 @@
 #include <thread>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#include "asio.hpp"
+#include <boost/asio.hpp>
 #include "flic.hpp"
 #include "external/cppformat/cppformat/format.h"
 #include "connection.h"
@@ -116,7 +116,7 @@ int main() {
 	flic::client::Client client;
 
 	try {
-		asio::io_service io_service;
+		boost::asio::io_service io_service;
 
 		Connection connection(io_service, { "localhost", "8999" });
 
@@ -143,17 +143,17 @@ int main() {
 					std::cout << "Uninitialized" << std::endl;
 				});
 
-		asio::deadline_timer startScanTimer(io_service,
+		boost::asio::deadline_timer startScanTimer(io_service,
 				boost::posix_time::seconds(5));
-		startScanTimer.async_wait([&client](const asio::error_code& error) {
+		startScanTimer.async_wait([&client](const boost::system::error_code& error) {
 			std::cout << "Start scanning for new buttons" << std::endl;
 			auto manager = client.getManager();
 			manager->startScan();
 		});
 
-		asio::deadline_timer startScanTimer(io_service,
+		boost::asio::deadline_timer stopScanTimer(io_service,
 				boost::posix_time::seconds(5+30));
-		startScanTimer.async_wait([&client](const asio::error_code& error) {
+		stopScanTimer.async_wait([&client](const boost::system::error_code& error) {
 			std::cout << "Stop scanning for new buttons" << std::endl;
 			auto manager = client.getManager();
 			manager->stopScan();

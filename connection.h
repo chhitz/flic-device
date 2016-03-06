@@ -10,13 +10,13 @@
 
 #include <deque>
 
-using asio::ip::tcp;
+using boost::asio::ip::tcp;
 
 typedef std::deque<std::string> message_queue;
 
 class Connection {
 public:
-	Connection(asio::io_service& io_service,
+	Connection(boost::asio::io_service& io_service,
 			const tcp::resolver::query& query);
 
 	void write(const std::string& msg);
@@ -27,7 +27,7 @@ private:
 	void do_write();
 
 private:
-	asio::io_service& io_service_;
+	boost::asio::io_service& io_service_;
 	tcp::socket socket_;
 	char read_msg_[128];
 	message_queue write_msgs_;
